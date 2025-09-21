@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Merriweather, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
 import { PortfolioProvider } from "@/lib/portfolioStore";
 import Navbar from "@/components/Navbar";
 
