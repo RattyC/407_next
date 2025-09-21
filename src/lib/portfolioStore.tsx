@@ -59,7 +59,7 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
         const parsed = JSON.parse(raw) as Student[];
         dispatch({ type: 'hydrate', payload: parsed });
       }
-    } catch (e) {
+    } catch {
       // ignore
     }
   }, []);
@@ -70,7 +70,7 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
       if (typeof window !== 'undefined') {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state.students));
       }
-    } catch (e) {
+    } catch {
       // ignore
     }
   }, [state.students]);

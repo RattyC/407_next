@@ -2,6 +2,8 @@
 
 import React, { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import Link from 'next/link';
 import { usePortfolio } from '@/lib/portfolioStore';
 import type { MediaItem, Student } from '@/types';
 
@@ -201,7 +203,9 @@ export default function PortfolioForm() {
         />
         {avatar && (
           <div className="mt-2 flex items-center gap-3">
-            <img src={avatar.url} alt="avatar" className="w-20 h-20 object-cover rounded-md border" />
+            <div className="w-20 h-20 relative rounded-md border overflow-hidden">
+              <Image src={avatar.url} alt="avatar" fill sizes="80px" className="object-cover" />
+            </div>
             <button type="button" className="text-sm text-red-600" onClick={() => setAvatar(null)}>
               ลบรูป
             </button>
@@ -213,9 +217,11 @@ export default function PortfolioForm() {
         <h3 className="font-medium">กิจกรรม (อัปโหลดได้หลายรูป)</h3>
         <input type="file" accept="image/*" multiple onChange={(e) => onMultiAdd(e.target.files, setActivities, activities)} />
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-          {activities.map((m) => (
+          {activities.map((m, idx) => (
             <div key={m.id} className="relative group">
-              <img src={m.url} className="w-full h-28 object-cover rounded-md border" />
+              <div className="w-full h-28 relative rounded-md border overflow-hidden">
+                <Image src={m.url} alt={`กิจกรรม ${idx + 1}`} fill sizes="200px" className="object-cover" />
+              </div>
               <button type="button" className="absolute top-1 right-1 text-xs bg-white/80 px-2 py-0.5 rounded opacity-0 group-hover:opacity-100" onClick={() => removeMedia(m.id, setActivities, activities)}>
                 ลบ
               </button>
@@ -228,9 +234,11 @@ export default function PortfolioForm() {
         <h3 className="font-medium">รางวัล</h3>
         <input type="file" accept="image/*" multiple onChange={(e) => onMultiAdd(e.target.files, setAwards, awards)} />
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-          {awards.map((m) => (
+          {awards.map((m, idx) => (
             <div key={m.id} className="relative group">
-              <img src={m.url} className="w-full h-28 object-cover rounded-md border" />
+              <div className="w-full h-28 relative rounded-md border overflow-hidden">
+                <Image src={m.url} alt={`รางวัล ${idx + 1}`} fill sizes="200px" className="object-cover" />
+              </div>
               <button type="button" className="absolute top-1 right-1 text-xs bg-white/80 px-2 py-0.5 rounded opacity-0 group-hover:opacity-100" onClick={() => removeMedia(m.id, setAwards, awards)}>
                 ลบ
               </button>
@@ -243,9 +251,11 @@ export default function PortfolioForm() {
         <h3 className="font-medium">ผลงาน</h3>
         <input type="file" accept="image/*" multiple onChange={(e) => onMultiAdd(e.target.files, setWorks, works)} />
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-          {works.map((m) => (
+          {works.map((m, idx) => (
             <div key={m.id} className="relative group">
-              <img src={m.url} className="w-full h-28 object-cover rounded-md border" />
+              <div className="w-full h-28 relative rounded-md border overflow-hidden">
+                <Image src={m.url} alt={`ผลงาน ${idx + 1}`} fill sizes="200px" className="object-cover" />
+              </div>
               <button type="button" className="absolute top-1 right-1 text-xs bg-white/80 px-2 py-0.5 rounded opacity-0 group-hover:opacity-100" onClick={() => removeMedia(m.id, setWorks, works)}>
                 ลบ
               </button>
@@ -257,7 +267,7 @@ export default function PortfolioForm() {
       <div className="flex gap-3">
         <button type="submit" className="px-4 py-2 rounded-md btn-primary">บันทึก Portfolio</button>
         <button type="button" onClick={fillSample} className="px-4 py-2 rounded-md border">เติมข้อมูลตัวอย่าง</button>
-        <a href="/teacher" className="px-4 py-2 rounded-md border">ดูรายชื่อนักเรียน</a>
+        <Link href="/teacher" className="px-4 py-2 rounded-md border">ดูรายชื่อนักเรียน</Link>
       </div>
     </form>
   );

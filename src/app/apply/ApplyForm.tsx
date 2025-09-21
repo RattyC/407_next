@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
+import Image from 'next/image';
 import { useRouter } from "next/navigation";
 import { usePortfolio } from "@/lib/portfolioStore";
 import type { MediaItem, Student } from "@/types";
@@ -272,7 +273,11 @@ export default function ApplyForm() {
             <div>
               <label className="block text-sm font-medium">รูปภาพประจำตัว</label>
               <input type="file" accept="image/*" onChange={async (e) => onAvatarChange(e.target.files?.[0] ?? null)} />
-              {avatar && (<img src={avatar.url} className="mt-2 w-20 h-20 object-cover rounded-md border" alt="avatar" />)}
+              {avatar && (
+                <div className="mt-2 w-20 h-20 relative rounded-md border overflow-hidden">
+                  <Image src={avatar.url} alt="avatar" fill sizes="80px" className="object-cover" />
+                </div>
+              )}
             </div>
             <div>
               <label className="block text-sm font-medium">กิจกรรม</label>
@@ -283,9 +288,11 @@ export default function ApplyForm() {
               >ลากวางไฟล์ที่นี่ หรือเลือกไฟล์ด้านล่าง</div>
               <input className="mt-2" type="file" accept="image/*" multiple onChange={(e) => onMultiAdd(e.target.files, setActivities, activities)} />
               <div className="grid grid-cols-3 md:grid-cols-5 gap-2 mt-2">
-                {activities.map((m) => (
+                {activities.map((m, idx) => (
                   <div key={m.id} className="relative group">
-                    <img src={m.url} className="w-full h-24 object-cover rounded-md border" />
+                    <div className="w-full h-24 relative rounded-md border overflow-hidden">
+                      <Image src={m.url} alt={`กิจกรรม ${idx + 1}`} fill sizes="160px" className="object-cover" />
+                    </div>
                     <button type="button" className="absolute top-1 right-1 text-xs bg-white/80 px-2 py-0.5 rounded opacity-0 group-hover:opacity-100" onClick={() => removeMedia(m.id, setActivities, activities)}>ลบ</button>
                   </div>
                 ))}
@@ -300,9 +307,11 @@ export default function ApplyForm() {
               >ลากวางไฟล์ที่นี่ หรือเลือกไฟล์ด้านล่าง</div>
               <input className="mt-2" type="file" accept="image/*" multiple onChange={(e) => onMultiAdd(e.target.files, setAwards, awards)} />
               <div className="grid grid-cols-3 md:grid-cols-5 gap-2 mt-2">
-                {awards.map((m) => (
+                {awards.map((m, idx) => (
                   <div key={m.id} className="relative group">
-                    <img src={m.url} className="w-full h-24 object-cover rounded-md border" />
+                    <div className="w-full h-24 relative rounded-md border overflow-hidden">
+                      <Image src={m.url} alt={`รางวัล ${idx + 1}`} fill sizes="160px" className="object-cover" />
+                    </div>
                     <button type="button" className="absolute top-1 right-1 text-xs bg-white/80 px-2 py-0.5 rounded opacity-0 group-hover:opacity-100" onClick={() => removeMedia(m.id, setAwards, awards)}>ลบ</button>
                   </div>
                 ))}
@@ -317,9 +326,11 @@ export default function ApplyForm() {
               >ลากวางไฟล์ที่นี่ หรือเลือกไฟล์ด้านล่าง</div>
               <input className="mt-2" type="file" accept="image/*" multiple onChange={(e) => onMultiAdd(e.target.files, setWorks, works)} />
               <div className="grid grid-cols-3 md:grid-cols-5 gap-2 mt-2">
-                {works.map((m) => (
+                {works.map((m, idx) => (
                   <div key={m.id} className="relative group">
-                    <img src={m.url} className="w-full h-24 object-cover rounded-md border" />
+                    <div className="w-full h-24 relative rounded-md border overflow-hidden">
+                      <Image src={m.url} alt={`ผลงาน ${idx + 1}`} fill sizes="160px" className="object-cover" />
+                    </div>
                     <button type="button" className="absolute top-1 right-1 text-xs bg-white/80 px-2 py-0.5 rounded opacity-0 group-hover:opacity-100" onClick={() => removeMedia(m.id, setWorks, works)}>ลบ</button>
                   </div>
                 ))}
@@ -328,7 +339,13 @@ export default function ApplyForm() {
           </div>
           <aside className="hidden md:block p-4 border rounded-md h-fit">
             <h3 className="font-medium mb-2">รูปโปรไฟล์</h3>
-            {avatar ? <img src={avatar.url} className="w-24 h-24 object-cover rounded-md border" /> : <div className="w-24 h-24 rounded-md border grid place-items-center text-xs text-black/60 dark:text-white/60">ไม่มีรูป</div>}
+            {avatar ? (
+              <div className="w-24 h-24 relative rounded-md border overflow-hidden">
+                <Image src={avatar.url} alt="avatar" fill sizes="96px" className="object-cover" />
+              </div>
+            ) : (
+              <div className="w-24 h-24 rounded-md border grid place-items-center text-xs text-black/60 dark:text-white/60">ไม่มีรูป</div>
+            )}
             <p className="text-xs text-black/60 mt-2">กิจกรรม: {activities.length} รูป</p>
             <p className="text-xs text-black/60">รางวัล: {awards.length} รูป</p>
             <p className="text-xs text-black/60">ผลงาน: {works.length} รูป</p>
@@ -347,4 +364,3 @@ export default function ApplyForm() {
     </div>
   );
 }
-

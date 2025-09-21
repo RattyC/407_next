@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import React, { useMemo, useState } from 'react';
 import { usePortfolio } from '@/lib/portfolioStore';
-import type { SortKey, Student } from '@/types';
+import type { SortKey } from '@/types';
 
 const headers: { key: SortKey; label: string }[] = [
   { key: 'firstName', label: 'ชื่อ' },
@@ -109,4 +109,3 @@ export default function StudentTable() {
     </div>
   );
 }
-

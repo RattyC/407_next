@@ -1,6 +1,7 @@
 "use client";
 
 import { useParams, useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { usePortfolio } from '@/lib/portfolioStore';
 
 export default function StudentDetailPage() {
@@ -22,7 +23,15 @@ export default function StudentDetailPage() {
     <div className="space-y-6">
       <div className="flex items-start gap-4">
         {s.avatar ? (
-          <img src={s.avatar.url} alt={`${s.firstName} ${s.lastName}`} className="w-28 h-28 object-cover rounded-md border" />
+          <div className="w-28 h-28 relative rounded-md border overflow-hidden">
+            <Image
+              src={s.avatar.url}
+              alt={`${s.firstName} ${s.lastName}`}
+              fill
+              sizes="112px"
+              className="object-cover"
+            />
+          </div>
         ) : (
           <div className="w-28 h-28 rounded-md border grid place-items-center text-sm text-black/60 dark:text-white/60">ไม่มีรูป</div>
         )}
@@ -74,11 +83,18 @@ function MediaGrid({ title, items }: { title: string; items: { id: string; url: 
     <section>
       <h2 className="font-medium mb-2">{title}</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-        {items.map((m) => (
-          <img key={m.id} src={m.url} className="w-full h-32 object-cover rounded-md border" />
+        {items.map((m, idx) => (
+          <div key={m.id} className="w-full h-32 relative rounded-md border overflow-hidden">
+            <Image
+              src={m.url}
+              alt={`${title} ${idx + 1}`}
+              fill
+              sizes="(min-width: 768px) 200px, 150px"
+              className="object-cover"
+            />
+          </div>
         ))}
       </div>
     </section>
   );
 }
-
