@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     template: "%s | Admissions Portal",
   },
   description: "Harvard-style admissions flow with portfolio, built on Next.js",
-  metadataBase: new URL("https://example.com"),
+  metadataBase: new URL("https://407-next.vercel.app"),
   applicationName: "Admissions Portal",
   openGraph: {
     title: "Admissions Portal — TCAS Portfolio",
